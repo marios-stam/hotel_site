@@ -1,0 +1,217 @@
+{%extends 'navbar.html' %}
+
+{% block content %}
+
+
+
+<h2 class="text-center font-bold pt-4 pb-5 mb-5"><strong>Registration form with steps</strong></h2>
+<div class="container" style="width: 100%">
+    <!-- Stepper -->
+    <div class="steps-form-2" style="margin: 0 auto;">
+        <div class="steps-row-2 setup-panel-2 d-flex justify-content-between">
+            <div class="steps-step-2">
+                <a href="#step-1"  class="btn btn-blue-grey  btn-circle-2 waves-effect ml-0" data-toggle="tooltip" data-placement="top" title="Basic Information"><i  class="fa fa-bed"></i></a>
+            </div>
+            <div class="steps-step-2">
+                <a href="#step-2"  class="btn btn-blue-grey btn-circle-2 waves-effect" data-toggle="tooltip" data-placement="top" title="Personal Data"><i class="fas fa-user"></i></a>
+            </div>
+            <div class="steps-step-2">
+                <a href="#step-3"  class="btn btn-blue-grey btn-circle-2 waves-effect" data-toggle="tooltip" data-placement="top" title="Terms and Conditions"><i class="fas fa-shopping-cart"></i></i></a>
+            </div>
+            <div class="steps-step-2">
+                <a href="#step-4"  class="btn btn-blue-grey btn-circle-2 waves-effect mr-0" data-toggle="tooltip" data-placement="top" title="Finish"><i class="fa fa-check" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- First Step -->
+    <form action="/finish_reservation" method="post">
+        <div class="row setup-content-2" id="step-1">
+            <div class="col-md-12">
+                <h3 class="font-weight-bold pl-0 my-4 text-center"><strong>Room details</strong></h3>
+                <table id="features_table">
+                    
+                    <tr>
+                      <th>Features</th>
+                      <th>Basic</th>
+                    </tr>
+                    {% for (key,value) in details.items()%}
+                        {%if key!="First Name" and key!="Last Name" and key!="Phone" and key!="Address"%}
+                            <tr>
+                            <td>{{key}}</td>
+                            <td>{{value|safe}}</td><!--use "\safe" in order to write html instead of plain text-->
+                            </tr>
+                        {%endif%}
+                    {% endfor %}
+                  </table>
+
+                <button class="btn btn-mdb-color btn-rounded nextBtn-2 float-right" type="button">Next</button>
+            </div>
+        </div>
+
+    <!-- Second Step -->
+        <div class="row setup-content-2" id="step-2">
+            <div class="col-md-12">
+                <h3 class="font-weight-bold pl-0 my-4"><strong>Personal Data</strong></h3>
+                <div class="form-group md-form">
+                    <label for="yourName-2" data-error="wrong" data-success="right" >First Name</label>
+                    <input id="yourName-2" type="text" required="required" class="form-control validate" name="First Name" value="{{details['First Name']}}">
+                </div>
+                <div class="form-group md-form mt-3">
+                    <label for="secondName-2" data-error="wrong" data-success="right">Surname</label>
+                    <input id="secondName-2" type="text" required="required" class="form-control validate" name="Last Name" value="{{details['Last Name']}}">
+                </div>
+                <div class="form-group md-form">
+                    <label for="surname-2" data-error="wrong" data-success="right">Phone Number</label>
+                    <input id="surname-2" type="text" required="required" class="form-control validate" name="Phone" value="{{details['Phone']}}">
+                </div>
+                <div class="form-group md-form mt-3">
+                    <label for="yourAddress-2" data-error="wrong" data-success="right">Address</label>
+                    <input id="yourAddress-2" type="text" required="required"  class="md-textarea validate form-control" name="Address" value="{{details['Address']}}"></input>
+                </div>
+                <button class="btn btn-mdb-color btn-rounded prevBtn-2 float-left" type="button">Previous</button>
+                <button class="btn btn-mdb-color btn-rounded nextBtn-2 float-right" type="button">Next</button>
+            </div>
+        </div>
+
+        <!-- Third Step -->
+        <div class="row setup-content-2" id="step-3">
+            <div class="col-md-12">
+            
+            <h3 class="font-weight-bold pl-0 my-4"><strong>Payment and Terms and conditions</strong></h3>
+                
+            <aside class="col-sm-6">                   
+                    <article class="card">
+                    <div class="card-body p-5">
+                    
+                    <ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
+                            <i class="fa fa-credit-card"></i> Credit Card</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
+                            <i class="fab fa-paypal"></i>  Paypal</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href="#nav-tab-bank">
+                            <i class="fa fa-university"></i>  Bank Transfer</a></li>
+                    </ul>
+                    
+                    <div class="tab-content">
+                    <div class="tab-pane fade show active" id="nav-tab-card">
+                        <p id="message" class="alert alert-success" >Payment has been confirmed!</p>
+                   
+                        <div class="form-group">
+                            <label for="username">Full name (on the card)</label>
+                            <input type="text" class="form-control"  placeholder="" >
+                        </div> <!-- form-group.// -->
+                    
+                        <div class="form-group">
+                            <label for="cardNumber">Card number</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" placeholder="">
+                                <div class="input-group-append">
+                                    <span class="input-group-text text-muted">
+                                        <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>   
+                                        <i class="fab fa-cc-mastercard"></i> 
+                                    </span>
+                                </div>
+                            </div>
+                        </div> <!-- form-group.// -->
+                    
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label><span class="hidden-xs">Expiration</span> </label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" placeholder="MM" >
+                                        <input type="number" class="form-control" placeholder="YY" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
+                                    <input  type="number" min="0" max="999" class="form-control" >
+                                </div> <!-- form-group.// -->
+                            </div>
+                        </div> <!-- row.// -->
+                        <button class="subscribe btn btn-primary btn-block" type="button" id="pay_button"> Confirm  </button>
+                    
+                    </div> <!-- tab-pane.// -->
+                    <div class="tab-pane fade" id="nav-tab-paypal">
+                    <p>Paypal is easiest way to pay online</p>
+                    <p>
+                    <button type="button" class="btn btn-primary"> <i class="fab fa-paypal"></i> Log in my Paypal </button>
+                    </p>
+                    <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. </p>
+                    </div>
+                    <div class="tab-pane fade" id="nav-tab-bank">
+                    <p>Bank accaunt details</p>
+                    <dl class="param">
+                      <dt>BANK: </dt>
+                      <dd> THE WORLD BANK</dd>
+                    </dl>
+                    <dl class="param">
+                      <dt>Accaunt number: </dt>
+                      <dd> 12345678912345</dd>
+                    </dl>
+                    <dl class="param">
+                      <dt>IBAN: </dt>
+                      <dd> 123456789</dd>
+                    </dl>
+                    <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. </p>
+                    </div> <!-- tab-pane.// -->
+                    </div> <!-- tab-content .// -->
+                    
+                    </div> <!-- card-body.// -->
+                    </article> <!-- card.// -->
+                    
+                    
+                        </aside> <!-- col.// -->
+                        
+                
+                    -->
+                <div class="form-check">
+                    <input type="checkbox" id="checkbox111" class="form-check-input">
+                    <label for="checkbox111" class="form-check-label">I agree to the terms and conditions</label>
+                </div>
+                <button class="btn btn-mdb-color btn-rounded prevBtn-2 float-left" type="button">Previous</button>
+                <button class="btn btn-mdb-color btn-rounded nextBtn-2 float-right" type="button">Next</button>
+            </div>
+        </div>
+
+        <!-- Fourth Step -->
+        <div class="row setup-content-2" id="step-4">
+            <div class="col-md-12">
+                <h3 class="font-weight-bold pl-0 my-4"><strong></strong></h3>
+                <h2 class="text-center font-weight-bold my-4">Please check all your details carefully <br> and click Resereve to complete the process.</h2>
+                <button class="btn btn-mdb-color btn-rounded prevBtn-2 float-left" type="button">Previous</button>
+                <button class="btn btn-success btn-rounded float-right" type="submit">Reserve</button>
+            </div>
+        </div>
+    </form>
+    <div id="alert_box" class="alert alert-danger " style="margin-top: 15px">
+        
+        <strong>Warning!</strong>Please fill properly all the details.
+      </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#message").hide();
+        $("#pay_button").click(function(){
+            if ($("#payment_form").valid()){
+                $("#message").text("Your payment has been confirmed!")
+            }else{
+                $("#message").text("The details of your credit card are wrong!Please try again.")
+            }
+            $("#message").fadeIn('slow');
+            
+        })
+    })        
+</script>
+{% endblock %}
